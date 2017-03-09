@@ -6,6 +6,7 @@
 #'
 #' @export
 #' @import stringr
+#' @include list2dataframe.R
 #' @rdname children
 #' @param whose string. an idendifier indicating \code{key}
 #' @param where list. the list tree including \code{whose}
@@ -29,12 +30,19 @@ children <- function(whose, where, key = 'stId'){
       # leaf node
       if(is.null(child$children))
         next
-      return(children(whose, child$children, key = key))
-      #return(lapply(where[key], function(x) children(whose, x)))
+      # return when got a dataframe or TRUE
+      dt = children(whose, child$children, key = key)
+      if(!is.logical(dt))
+        return(dt)
+      else{
+        if(dt)
+          return(dt)
+      }
+
     }
 
   }
-  cat(whose, "NOT FOUND")
+  # cat(whose, "NOT FOUND")
   return(FALSE)
 
 }
@@ -53,42 +61,4 @@ childrenof <- function(obj){
   }
 }
 
-list2dataframe <- function(LST,
-                           tomerge = 'name',         # which keys to merge to one
-                           todelete = NULL,          # which keys to delete
-                           toquantity = 'children'   # which keys to substutute with its quantity
-                           ){
 
-  # merge the list to a string
-  if(!is.null(tomerge)){
-    for(n in 1:length(LST)){
-      LST[[n]][[tomerge]] = str_c(LST[[n]][[tomerge]], collapse = "; ")
-    }
-  }
-
-  # substitute list to its quantity(length), rename later
-  if(!is.null(toquantity) & !is.null(LST[[1]][[toquantity]])){
-    for(n in 1:length(LST))
-      LST[[n]][[toquantity]] = length(LST[[n]][[toquantity]])
-  }
-
-  # convert to dataframe
-  dt = do.call(rbind, lapply(LST, as.data.frame, stringsAsFactors = FALSE))
-
-  # to delete
-  if(!is.null(todelete)){
-    dt[todelete] = NULL
-  }
-
-  # rename the column toquantity
-  colnames(dt) = str_replace(colnames(dt),
-                             str_c("^", toquantity, "$"),
-                             str_c(toquantity, "NO."))
-
-  # rename rows the abbreviatory NAME, for convenience to index
-  if(!is.null(LST[[1]]$name) & any(str_detect(dt[['name']], "; "))){
-    abbrName = str_match(dt[['name']], "([^;]+)(?:; |$)")[,2]
-    rownames(dt) = abbrName
-  }
-  return(dt)
-}
