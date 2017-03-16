@@ -5,7 +5,7 @@
 \alias{rtEntity}
 \title{PhysicalEntity Queries}
 \usage{
-reactomeEntity(id, queryType)
+reactomeEntity(id, queryType, silent = FALSE)
 
 rtEntity(id, queryType)
 }
