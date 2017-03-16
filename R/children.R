@@ -1,13 +1,12 @@
-#' List the children of something in a list tree
+#' List the children of something in a dataframe tree
 #'
 #' In a tree(e.g. a hierarchical structure for some species) represtented
-#' by a nested list. \code{children} lists the children of \code{whose} as
-#' a dataframe.
+#' by a nested dataframe. \code{children} lists the children of \code{whose}.
 #'
 #' @export
 #' @import stringr
 #' @include list2dataframe.R
-#' @rdname children
+#' @rdname eventHierarchy
 #' @param whose string. an idendifier indicating \code{key}
 #' @param where list. the list tree including \code{whose}
 #' @param key string. name we search depends on
@@ -47,9 +46,7 @@ children <- function(whose, where, key = 'stId'){
 
 }
 
-#' @export
-#' @rdname children
-#' @param obj list. the father node
+
 childrenof <- function(obj){
   if(is.null(obj$children)){
 
