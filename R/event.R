@@ -57,7 +57,7 @@
 #' @seealso \code{\link{reactomeEventHierarchy}}
 #' @rdname event
 reactomeEvent <- function(id, type, silent = FALSE){
-  if(exis)
+
   url0 = 'http://www.reactome.org/ContentService/data/event'
   urlComponent = list(url0, id, type)
   dt = url2dataframe(urlComponent = urlComponent)
