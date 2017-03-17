@@ -2,7 +2,6 @@
 
 export(children)
 export(childrenof)
-export(reactomeEntity)
 export(rtEntity)
 import(httr)
 import(jsonlite)

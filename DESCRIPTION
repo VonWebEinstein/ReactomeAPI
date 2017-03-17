@@ -17,4 +17,5 @@ Collate:
     'events.R'
     'hello.R'
     'reactomeEntity.R'
+    'test_POST&fromJSON.R'
     'test_POST.R'
