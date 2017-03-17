@@ -4,28 +4,51 @@
 #'
 #'
 
-#' @param id a character string. identifier of the complex, entity or the PhysicalEntity
+#' @param id a character vector of identifiers of the complex, entity or the PhysicalEntity
 #' that you want to query
-#' @param queryType a character string that specify the query type. can be \code{subunit},
-#' \code{structure}, or \code{form}.
+#' @param queryType a character vector that specify the query type. can be \code{subunits},
+#' \code{componentOf}, or \code{otherForms}.
+#' @param simplify attempt to reduce the result to a data frame when length of \code{id} is 1.
 #' @details
-#' queryType = "subunits". Retrieves the list of subunits that constitute any given complex.
 #'
-#' queryType = "componentOf". Retrieves the list of structures (Complexes and Sets) that include
-#' the given entity as their component.
+#' queryType = \code{subunits}. Retrieves the list of subunits that constitute any given complex.
+#' In case the complex comprises other complexes, this method recursively breaks all of them into
+#' their subunits.
 #'
-#' queryType = "otherForms". Retrieves a list containing all other forms of the given PhysicalEntity.
-#' @return a dataframe
+#' When queryType = \code{componentOf}, this function will retrieves the list of structures
+#' (Complexes and Sets) that include the given entity as their component.It should be mentioned
+#' that the list includes only simplified entries (type, names, ids) and not full information about each item.
+#'
+#' queryType = \code{otherForms}. Retrieves a list containing all other forms of the given PhysicalEntity.
+#' These other forms are PhysicalEntities that share the same ReferenceEntity identifier,
+#' e.g. PTEN H93R[R-HSA-2318524] and PTEN C124R[R-HSA-2317439] are two forms of PTEN.
+#' @return a list of tha same length of \code{id}, with ecah element corresponding to the query result of
+#' one of id.
 #' @include error.R
 #' @export
 #' @examples
-#' reactomeEntity("R-HSA-5674003", "subunits")
-#' reactomeEntity("R-HSA-199420", "componentOf")
+#' rtEntity("R-HSA-5674003", "subunits")
+#' rtEntity("R-HSA-199420", "componentOf")
+#' rtEntity(id = c("R-HSA-5674003", "R-HSA-199420"),
+#'          queryType= c("subunits", "componentOf"))
 
 #'
 #' @import httr
 #' @import jsonlite
+#' @import stringr
 #' @rdname entity
+
+rtEntity = function(id, queryType, simplify = TRUE){
+
+  res = mapply(reactomeEntity, id = id, queryType = queryType,
+               SIMPLIFY = FALSE)
+  if(length(res) == 1 && simplify){
+
+    res = res[[1]]
+  }
+  return(res)
+}
+
 
 reactomeEntity = function(id,          # entity id, complex id , dbid or StId of a PhysicalEntity
                         queryType){    # query type about Entity
@@ -51,15 +74,6 @@ reactomeEntity = function(id,          # entity id, complex id , dbid or StId of
   }
 }
 
-
-#' @export
-#' @rdname entity
-#' @examples
-#' entity = rtEntity("R-HSA-199420", "otherForms")
-#'
-rtEntity <- function(id , queryType){
-  return(reactomeEntity(id = id, queryType = queryType))
-}
   # if(queryType == 'subunits')
   #   tmp = 'complex'
   # else
