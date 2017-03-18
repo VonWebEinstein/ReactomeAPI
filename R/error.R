@@ -1,7 +1,9 @@
 # print error message, and return FALSE
-errorMessage <- function(cont){
-  cat(cont$code, ' ')
-  cat(cont$reason, '\n')
-  lapply(cont$messages, cat, '\n')
+errorMessage <- function(cont, silent){
+  if(!silent){
+    cat(cont$code, ' ')
+    cat(cont$reason, '\n')
+    lapply(cont$messages, cat, '\n')
+  }
   return(FALSE)
 }

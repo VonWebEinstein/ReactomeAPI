@@ -38,6 +38,7 @@
 #' @import stringr
 #' @rdname entity
 
+
 rtEntity = function(id, queryType, simplify = TRUE){
 
   res = mapply(reactomeEntity, id = id, queryType = queryType,
@@ -50,8 +51,11 @@ rtEntity = function(id, queryType, simplify = TRUE){
 }
 
 
-reactomeEntity = function(id,          # entity id, complex id , dbid or StId of a PhysicalEntity
-                        queryType){    # query type about Entity
+
+reactomeEntity = function(id,                 # entity id, complex id , dbid or StId of a PhysicalEntity
+                          queryType,          # query type about Entity
+                          silent = FALSE){    # whether print error messages on the screen
+
 
   if(is.null(id) || is.null(queryType)){
     stop("Both of id and queryType cannot be null")
@@ -67,7 +71,7 @@ reactomeEntity = function(id,          # entity id, complex id , dbid or StId of
   res = try(fromJSON(url), silent = TRUE)
   if(inherits(res, "try-error")){
     tmp = content(GET(url, content_type_json()))
-    return(errorMessage(tmp))
+    return(errorMessage(tmp, silent = silent))
   }
   else{
     return(res)

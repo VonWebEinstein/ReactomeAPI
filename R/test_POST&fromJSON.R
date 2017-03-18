@@ -1,18 +1,19 @@
 # test_interactors
 
-res = fromJSON("http://www.reactome.org/ContentService/interactors/psicquic/molecule/MINT/Q13501/details", flatten = TRUE)
+# res = fromJSON("http://www.reactome.org/ContentService/interactors/psicquic/molecule/MINT/Q13501/details", flatten = TRUE)
 
-res$entities[ ,c("acc", "count")]
+# res$entities[ ,c("acc", "count")]
 
-res1 = GET("http://www.reactome.org/ContentService/interactors/psicquic/molecule/MINT/Q13501/details", accept_json())
 
-cont1 = fromJSON(content(res1, as = "text"))
+# res1 = GET("http://www.reactome.org/ContentService/interactors/psicquic/molecule/MINT/Q13501/details", accept_json())
 
-url="http://www.reactome.org/ContentService/interactors/psicquic/molecules/MINT/details"
+# cont1 = fromJSON(content(res1, as = "text"))
 
-res2 = POST(url, body="Q13501",content_type("text/plain"))
+# url="http://www.reactome.org/ContentService/interactors/psicquic/molecules/MINT/details"
 
-content(res2)
+# res2 = POST(url, body="Q13501",content_type("text/plain"))
 
-cont2 = fromJSON(content(res2, as = "text"))
+# content(res2)
+
+# cont2 = fromJSON(content(res2, as = "text"))
 

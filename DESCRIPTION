@@ -10,12 +10,20 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+Imports:
+    httr,
+    stringr,
+    jsonlite
 Collate: 
+    'error.R'
+    'LowerPath.R'
     'list2dataframe.R'
     'children.R'
-    'error.R'
-    'events.R'
+    'url2dataframe.R'
+    'event.R'
+    'eventHierarchy.R'
     'hello.R'
     'reactomeEntity.R'
+    'rtContainedEvents.R'
     'test_POST&fromJSON.R'
     'test_POST.R'

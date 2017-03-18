@@ -8,7 +8,8 @@ list2dataframe <- function(LST,
   if(!is.null(tomerge)){
     for(n in 1:length(LST)){
       for(mer in tomerge)
-        LST[[n]][[mer]] = str_c(LST[[n]][[mer]], collapse = "; ")
+        LST[[n]][[mer]] = list(as.character(LST[[n]][[mer]]))
+          # str_c(LST[[n]][[mer]], collapse = "; ")
     }
   }
 
@@ -34,7 +35,7 @@ list2dataframe <- function(LST,
     }
   }
   # convert to dataframe
-  dt = do.call(rbind, lapply(LST, as.data.frame, stringsAsFactors = FALSE))
+  dt = do.call(rbind, lapply(LST, singleLine2dataframe))
 
 
 
@@ -44,11 +45,21 @@ list2dataframe <- function(LST,
                              str_c(toquantity, "NO."))
 
   # rename rows the abbreviatory NAME, for convenience to index
-  if(!is.null(LST[[1]]$name) & any(str_detect(dt[['name']], "; "))){
-    abbrName = str_match(dt[['name']], "([^;]+)(?:; |$)")[,2]
-    # set row names if abbrNames are unique
-    if(length(unique(abbrName)) == nrow(dt))
-      rownames(dt) = abbrName
-  }
+  # if(!is.null(LST[[1]]$name) & any(str_detect(dt[['name']], "; "))){
+  #   abbrName = str_match(dt[['name']], "([^;]+)(?:; |$)")[,2]
+  #   # set row names if abbrNames are unique
+  #   if(length(unique(abbrName)) == nrow(dt))
+  #     rownames(dt) = abbrName
+  # }
+  return(dt)
+}
+
+# convert a list to dataframe with single obs.
+singleLine2dataframe <- function(LST){
+  dt = data.frame(t(1:length(LST)))
+  for(n in 1:length(LST))
+    dt[n] = LST[n]
+
+  colnames(dt) = names(LST)
   return(dt)
 }
