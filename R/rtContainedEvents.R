@@ -16,7 +16,7 @@
 #' @export
 #' @include error.R
 #' @include url2dataframe.R
-#' @example
+#' @examples
 #' res = rtContainedEvents(id = "R-HSA-5673001", ATTR = "all")
 #'
 #' res = rtContainedEvents(id = "R-HSA-5673001", ATTR = "stId")
@@ -26,13 +26,13 @@ rtContainedEvents = function(id, ATTR = "all", silent = TRUE){
   url0 = "http://www.reactome.org/ContentService/data/pathway"
   if(ATTR == "all"){
 
-   url = list(url0, id, tmp0 = "containdEvents")
+   url = list(url0, id, tmp0 = "containedEvents")
   }
   else{
     url = list(url0, id, tmp0 ="containedEvents", tmp1 = ATTR)
   }
 
-  dt = url2dataframe(urlComponent = urlComponent, silent = silent)
+  dt = url2dataframe(urlComponent = url, silent = silent)
   return(dt)
 
 

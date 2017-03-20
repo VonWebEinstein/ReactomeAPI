@@ -28,3 +28,8 @@ For example, a pathway can contain smaller pathways and reactions.
 This function will get all infromations about the containes events when ATTR = \code{"all},
 otherwise, only the attribute sepcified by \code{ATTR} will be retrieved.
 }
+\examples{
+res = rtContainedEvents(id = "R-HSA-5673001", ATTR = "all")
+
+res = rtContainedEvents(id = "R-HSA-5673001", ATTR = "stId")
+}
