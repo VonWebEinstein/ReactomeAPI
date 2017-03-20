@@ -25,7 +25,7 @@ Events are the building blocks used in Reactome to represent all biological proc
 and they include pathways and reactions. Typically, an event can contain other events.
 For example, a pathway can contain smaller pathways and reactions.
 
-This function will get all infromations about the containes events when ATTR = \code{"all},
+This function will get all infromations about the containes events when ATTR = \code{all},
 otherwise, only the attribute sepcified by \code{ATTR} will be retrieved.
 }
 \examples{
