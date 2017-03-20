@@ -35,14 +35,20 @@ reactomeDiseases <- function(dataType) {
   if(dataType == "diseases")
     res = fromJSON(url)
   else if(dataType == "diseases/doid"){
-    tmp = strsplit(content(GET(url)),"\n")
-    tmp1 = list(1:length(tmp[[1]]))
-    tmp2 = list(1:length(tmp[[1]]))
-    for(i in 1:length(tmp[[1]])){
-      tmp1[[1]][i] = strsplit(tmp[[1]][i],"\t")[[1]][1]
-      tmp2[[1]][i] = strsplit(tmp[[1]][i],"\t")[[1]][2]
+    tmp = strsplit(as.character(content(GET(url))),"\n")
+    l = length(tmp[[1]])
+    tmp1 = list(1:l)
+    tmp2 = list(1:l)
+    for(i in 1:l){
+      tmp1[[1]][i] = strsplit(as.character(tmp[[1]][i]),"\t")[[1]][1]
+      tmp2[[1]][i] = strsplit(as.character(tmp[[1]][i]),"\t")[[1]][2]
     }
-    res = data.frame(tmp1[[1]],tmp2[[1]],stringsAsFactors = F)
+    tmp3 = list(1:l)
+    for(i in 1:l){
+      tmp3[[1]][i] = strsplit(as.character(tmp2[[1]][i]),":")[[1]][2]
+    }
+    res = data.frame(tmp1[[1]],tmp3[[1]],stringsAsFactors = F)
+    colnames(res) = c("tmp","DOID")
     return(res)
   }
 }
