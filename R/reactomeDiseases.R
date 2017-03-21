@@ -1,16 +1,16 @@
 #' Disease related queries
 #'
-#' It retrieves the list of disease or disease DOIDs annotated in Reactome
+#' It retrieves the dataframe of disease or disease DOIDs annotated in Reactome
 #'
-#' @description retrieves the list of disease DOIDs annotated in Reactome
+#' @description retrieves the dataframe of disease DOIDs annotated in Reactome
 #'
 #' @usage
 #'
 #' @param dataType a chacter string that specify the data type. can be \code{diseasw}
 #' or \code {disease/doid}
 #'
-#' @details 'dataType = disease ' It retrieves the list of diseases annotated in Reactome
-#' 'dataType = disease/doid',It retrieves the list of disease DOIDs annotated in Reactome
+#' @details 'dataType = disease ' It retrieves the dataframe of diseases annotated in Reactome
+#' 'dataType = disease/doid',It retrieves the dataframe of disease DOIDs annotated in Reactome
 #' Its Response Class (Status 200) is a string,else if Response Messages HTTP Status
 #' \Code{406},the reason is Not acceptable according to the accept headers sent in the request
 #' \code{500},Internal Server Error
@@ -18,8 +18,8 @@
 #' @return a dataframe
 #' @export
 #' @examples
-#' reactomeDiseases("disease")
-#' reactomeDiseases("disease/doid")
+#' reactomeDiseases("diseases")
+#' reactomeDiseases("diseases/doid")
 #'
 #' @import stringer
 #' @import httr
