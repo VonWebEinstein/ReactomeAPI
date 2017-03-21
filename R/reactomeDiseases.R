@@ -4,7 +4,8 @@
 #'
 #' @description retrieves the dataframe of disease DOIDs annotated in Reactome
 #'
-#' @usage
+#' @usage reactomeDiseases("diseases")
+#' or rectomeDiseases("diseases/doid")
 #'
 #' @param dataType a chacter string that specify the data type. can be \code{diseasw}
 #' or \code {disease/doid}
