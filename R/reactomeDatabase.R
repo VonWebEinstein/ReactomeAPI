@@ -12,11 +12,11 @@
 #'
 #' @return the name and the version of current database
 #'
-#' @example x = reactomeDatabase()
+#' @example reactomeDatabase()
 #'
 #' @import stringr
 #' @import httr
-#' @rdname disease
+#' @rdname database
 #'
 #'
 reactomeDatabase<-function(){
