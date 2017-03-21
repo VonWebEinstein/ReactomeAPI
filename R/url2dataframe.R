@@ -6,7 +6,8 @@
 #'
 url2dataframe <- function(urlComponent,
                           bindToSingleDataframe = TRUE,
-                          silent = FALSE){
+                          silent = FALSE,
+                          rework = function(s) s){
 
   url = str_c(urlComponent, collapse = '/')
   res = try(fromJSON(url), silent = TRUE)
@@ -19,7 +20,7 @@ url2dataframe <- function(urlComponent,
     if(bindToSingleDataframe && !is.data.frame(res)){
       res = do.call(rbind, res)
     }
-    return(res)
+    return(rework(res))
   }
 
 }
