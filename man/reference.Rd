@@ -10,7 +10,7 @@ reactomeReferences(id)
 rtReferences(id)
 }
 \arguments{
-\item{id}{A string. Identifier for a given entity}
+\item{id}{string. Identifier for a given entity}
 }
 \value{
 A dataframe.
