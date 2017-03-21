@@ -1,0 +1,41 @@
+#' ReferenceEntity queries
+#'
+#' Retrieves a dataframe containing all the reference entities for a given identifier.
+#'
+#' @param id string. Identifier for a given entity
+#'
+#' @return A dataframe.
+#'
+#' @examples refrenceEntity = reactomeReferences("15377").
+#'
+#' @include error.R
+#' @import jsonlite
+#' @import stringr
+#' @import httr
+#' @export
+#'
+#' @rdname reference
+#'
+#'
+#'
+
+reactomeReferences <- function(id){
+  if(is.null(id))
+    stop("id can't be null")
+  url = str_c("http://www.reactome.org/ContentService/references/mapping/",id)
+  res = try(fromJSON(url), silent = TRUE)
+  if(inherits(res, "try-error")){
+    tmp = content(GET(url, content_type_json()))
+    return(errorMessage(tmp, silent = silent))
+  }
+  else
+    return(res)
+}
+
+#' @rdname reference
+#' @export
+
+rtReferences <- function(id){
+  return(reactomeReferences(id))
+}
+
