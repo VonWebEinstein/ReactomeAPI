@@ -2,7 +2,7 @@
 #'
 #' Return the name and the version of current database
 #'
-#' @describeIn Return the name and the version of current database
+#' @description Return the name and the version of current database
 #'
 #' @usage reactomeDatabase()
 #'
@@ -12,7 +12,6 @@
 #'
 #' @return the name and the version of current database
 #'
-#' @example reactomeDatabase()
 #'
 #' @import stringr
 #' @import httr
