@@ -22,7 +22,7 @@
 #' reactomeDiseases("diseases")
 #' reactomeDiseases("diseases/doid")
 #'
-#' @import stringer
+#' @import stringr
 #' @import httr
 #' @import jsonlite
 #' @rdname disease
