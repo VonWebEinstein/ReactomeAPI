@@ -14,7 +14,7 @@
 #'
 #' @example x = reactomeDatabase()
 #'
-#' @import stringer
+#' @import stringr
 #' @import httr
 #' @rdname disease
 #'
