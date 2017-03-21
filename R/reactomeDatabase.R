@@ -2,17 +2,11 @@
 #'
 #' Return the name and the version of current database
 #'
-#' @description Return the name and the version of current database
-#'
-#' @usage reactomeDatabase()
-#'
-#' @details Its Response Class (Status 200) is a string,else if Response Messages HTTP Status
-#' \Code{406},the reason is Not acceptable according to the accept headers sent in the request
-#' \code{500},Internal Server Error
-#'
-#' @return the name and the version of current database
+#' @return A dataframe.
 #'
 #'
+#'
+#' @export
 #' @import stringr
 #' @import httr
 #' @rdname database
