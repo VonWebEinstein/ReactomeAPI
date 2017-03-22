@@ -33,6 +33,7 @@ Collate:
     'reactomeEntity.R'
     'rtContainedEvents.R'
     'rtReferences.R'
+    'rtSchema.R'
     'rtSpecies.R'
     'test_POST&fromJSON.R'
     'test_POST.R'
