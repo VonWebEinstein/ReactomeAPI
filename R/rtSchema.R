@@ -19,6 +19,7 @@
 #'
 #' @examples schema_class = rtSchema(schemaclass = "pathway",species = "9606",specified = "detail",page = 1,offset = 25,silent = FALSE)
 #'
+#' @include url2dataframe.R
 #' @include error.R
 #' @import jsonlite
 #' @import stringr
@@ -35,19 +36,11 @@ reactomeSchema <- function(schemaclass = "Pathway",
                            silent = FALSE){
   tmp_url = 'http://www.reactome.org/ContentService/data/schema/'
   url = switch(specified,
-                detail = str_c(tmp_url,schemaclass,"?","species=",species,"&","page=",page,"&","offset=",offset),
-                simplified = str_c(tmp_url,schemaclass,"/","min","?","species=",species,"&","page=",page,"&","offset=",offset),
-                count = str_c(tmp_url,className,"/","count","?","species=",species),
-                reference = str_c(tmp_url,className,"/","reference","?","page=",page,"&","offset=",offset))
-  res = try(fromJSON(url), silent = TRUE)
-  if(inherits(res, "try-error")){
-    tmp = content(GET(url, content_type_json()))
-    return(errorMessage(tmp, silent = silent))
-  }
-  else{
-      return(res)
-    }
-
+                detail = c(tmp_url,str_c(schemaclass,"?species=",species,"&page=",page,"&offset=",offset)),
+                simplified = c(tmp_url,str_c(schemaclass,"/min?species=",species,"&page=",page,"&offset=",offset)),
+                count = c(tmp_url,str_c(schemaclass,"/count?species=",species)),
+                reference = c(tmp_url,str_c(schemaclass,"/reference?page=",page,"&offset=",offset)))
+  url2dataframe(urlComponent = url)
 }
 
 #' @export
