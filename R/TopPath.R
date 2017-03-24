@@ -1,3 +1,4 @@
+# 写到pathway 一起， 帮助也融合到一起
 #' Pathway related queries
 #'
 #'This method retrieves  the list of top level pathways for the given species.

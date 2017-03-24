@@ -21,7 +21,7 @@
 #'
 #' @rdname species
 #'
-
+# 参数species -> main = TRUE
 reactomeSpecies <- function(species = 'main', silent = FALSE){
   if(is.null(species))
     stop("species can't be null")

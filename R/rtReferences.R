@@ -16,9 +16,7 @@
 #'
 #' @rdname reference
 #'
-#'
-#'
-
+# 帮助指定到entity
 reactomeReferences <- function(id){
   if(is.null(id))
     stop("id can't be null")

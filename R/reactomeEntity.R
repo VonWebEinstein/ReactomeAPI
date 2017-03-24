@@ -31,14 +31,14 @@
 #' rtEntity("R-HSA-199420", "componentOf")
 #' rtEntity(id = c("R-HSA-5674003", "R-HSA-199420"),
 #'          queryType= c("subunits", "componentOf"))
-
+# 对多个id指定多个类型不自然，多个id单一类型
 #'
 #' @import httr
 #' @import jsonlite
 #' @import stringr
 #' @rdname entity
 
-
+# 在外面用apply包装是下下策
 rtEntity = function(id, queryType, simplify = TRUE){
 
   res = mapply(reactomeEntity, id = id, queryType = queryType,

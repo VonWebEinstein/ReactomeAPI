@@ -27,7 +27,9 @@
 #' @export
 #' @rdname schema
 #'
-
+# specified -> type
+# 增大offset上限，增加返回所有结果选项
+# 或者改为请求结果的范围 c(1,100)
 reactomeSchema <- function(schemaclass = "Pathway",
                            species = "9606",
                            specified = "detail", # detail simplified count or reference
@@ -35,17 +37,19 @@ reactomeSchema <- function(schemaclass = "Pathway",
                            offset = 25,
                            silent = FALSE){
   tmp_url = 'http://www.reactome.org/ContentService/data/schema/'
+  # url的组织 不简洁
   url = switch(specified,
                 detail = c(tmp_url,str_c(schemaclass,"?species=",species,"&page=",page,"&offset=",offset)),
                 simplified = c(tmp_url,str_c(schemaclass,"/min?species=",species,"&page=",page,"&offset=",offset)),
                 count = c(tmp_url,str_c(schemaclass,"/count?species=",species)),
                 reference = c(tmp_url,str_c(schemaclass,"/reference?page=",page,"&offset=",offset)))
+  # 最好显式返回
   url2dataframe(urlComponent = url)
 }
 
 #' @export
 #' @rdname schema
-
+# @usage rtSchema(...)
 rtSchema <- function(schemaclass = "Pathway",
                      species = "9606",
                      specified = "detail", # detail simplified count or reference

@@ -21,6 +21,8 @@
 #'
 #' res = rtContainedEvents(id = "R-HSA-5673001", ATTR = "stId")
 
+# 出错
+# ATTR， attributrName 太突兀
 rtContainedEvents = function(id, ATTR = "all", silent = TRUE){
 
   url0 = "http://www.reactome.org/ContentService/data/pathway"
