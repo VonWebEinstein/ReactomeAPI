@@ -14,7 +14,7 @@ list2dataframe <- function(LST,
   }
 
   # substitute list to its quantity(length), rename later
-  if(!is.null(toquantity) & !is.null(LST[[1]][[toquantity]])){
+  if(!is.null(toquantity) && !is.null(LST[[1]][[toquantity]])){
     for(n in 1:length(LST))
       LST[[n]][[toquantity]] = length(LST[[n]][[toquantity]])
   }
@@ -40,7 +40,8 @@ list2dataframe <- function(LST,
 
 
   # rename the column toquantity
-  colnames(dt) = str_replace(colnames(dt),
+  if(!is.null(toquantity))
+    colnames(dt) = str_replace(colnames(dt),
                              str_c("^", toquantity, "$"),
                              str_c(toquantity, "NO."))
 
@@ -56,10 +57,37 @@ list2dataframe <- function(LST,
 
 # convert a list to dataframe with single obs.
 singleLine2dataframe <- function(LST){
-  dt = data.frame(t(1:length(LST)))
-  for(n in 1:length(LST))
-    dt[n] = LST[n]
+  return(Line2dt(LST)[[1]])
+}
 
+Line2dt <- function(LST){
+  if(0 == length(LST))
+    return(NA)
+  if(is.data.frame(LST))
+    return(list(LST))
+
+  dt = data.frame(t(1:length(LST)))
+  for(n in 1:length(LST)){
+    UNLIST = untiList(LST[[n]])
+    if(length(UNLIST) == 0){
+      dt[[n]] = NA
+      next
+    }
+    if(is.list(UNLIST) && !is.null(names(UNLIST)))
+      dt[[n]] = Line2dt(UNLIST)
+    else{
+      if(length(LST[[n]]) > 1)
+        dt[[n]] = list(LST[[n]])
+      else
+        dt[[n]] = LST[[n]]
+    }
+  }
   colnames(dt) = names(LST)
-  return(dt)
+  return(list(dt))
+}
+
+untiList <- function(LST){
+  if(is.list(LST) && length(LST) == 1 && is.list(LST[[1]]))
+    return(LST[[1]])
+  return(LST)
 }
