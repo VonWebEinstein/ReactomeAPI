@@ -4,7 +4,7 @@
 #' multiple or single. Multiple response multi-ids, single response single id.
 #'
 # long ? interger, 改成可接受string 和 interger
-#' @param speciesId long. The species for which the orthology is requested.
+#' @param speciesId integer. The species for which the orthology is requested.
 #' @param id strings. The event for which the orthology is requested.
 #' @param silent logical. Run quitely.
 #'
@@ -20,13 +20,14 @@
 #' @examples
 # 代码太长及时换行
 #' rtOrthology = reactomeOthology(speciesId = '49633',id = 'R-HSA-6799198')
-#' rtOrthologies = reactomeOthology(speciesId = '49633',id = c('R-HSA-6799198','R-HSA-6799197'))
+#' rtOrthologies = reactomeOthology(speciesId = '49633',
+#'                                  id = c('R-HSA-6799198','R-HSA-6799197'))
 #'
 #' @rdname othology
 #' @export
 #' @include POST_Method.R
 
-# 健壮和用户友好， 多个ID时可指定character vertor， 逗号分割单string, 甚至list
+# 健壮和用户友好， 多个ID时可指定character vector， 逗号分割单string, 甚至list
 reactomeOthology <- function(speciesId = '49633',
                              id = 'R-HSA-6799198',
                              multi = FALSE,

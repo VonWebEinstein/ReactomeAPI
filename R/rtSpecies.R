@@ -3,28 +3,29 @@
 #' This method retrieves the dataframe of all species or main species
 #' in Reactome knowledgebase, sorted by name.
 #'
-#' @param species string. "all":retrieves the dataframe of all species.
-#' "main":retrieves the dataframe of main species
+#' @param main logical.\code{TRUE}:retrieves the dataframe of main species.
+#'                     \code{FALSE}:retrieves the dataframe of all species.
 #'
 #' @return dataframe.
 #'
 #' @examples
-#' all_species = rtSpecies("all")
-#' main_species = rtSpecies("main")
+#' main_species = rtSpecies(TRUE)
+#' all_species = rtSpecies(FALSE)
 #'
 #' @include error.R
 #' @include url2dataframe.R
-#' @import jsonlite
-#' @import stringr
-#' @import httr
 #' @export
 #'
 #' @rdname species
 #'
-# 参数species -> main = TRUE
-reactomeSpecies <- function(species = 'main', silent = FALSE){
-  if(is.null(species))
-    stop("species can't be null")
+
+reactomeSpecies <- function(main = TRUE, silent = FALSE){
+  if(is.null(main))
+    stop("argument is lack")
+  if(main)
+    species = "main"
+  else
+    species = "all"
   url = list("http://www.reactome.org/ContentService/data/species",species)
   dt = url2dataframe(urlComponent = url, silent = silent)
   return(dt)
@@ -41,6 +42,6 @@ reactomeSpecies <- function(species = 'main', silent = FALSE){
 #' @export
 #' @rdname species
 #'
-rtSpecies <- function(species){
-  return(reactomeSpecies(species))
+rtSpecies <- function(main = TRUE){
+  return(reactomeSpecies(main))
 }
