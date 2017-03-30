@@ -32,7 +32,7 @@
 #'   this API. Please note that those are no longer part of the retrieved objects.
 #'   Only requests containing up to 20 ids are processed.
 #'   }
-#'
+#' @return A dataframe.
 #' @examples
 #' # detailed info
 #' dt.detail = rtQuery('R-HSA-1640170', type = 'detail')
@@ -222,7 +222,8 @@ query_attr_atom <- function(url, ns, attr_which_set, silent){
 #' @include tools.R
 #' @examples
 #' # download images
-#' images = rtGetImage(c('R-HSA-1640170', 'R-HSA-69620'))
+#' # NA means no figure.
+#' images = rtGetImage(c('R-DMA-1640170','R-HSA-1640170', 'R-HSA-69620'))
 #'
 
 rtGetImage <- function(id){
