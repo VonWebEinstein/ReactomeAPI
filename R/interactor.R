@@ -5,11 +5,11 @@
 #' Retrieve a detailed(summary) interaction information of given accession(s)
 #' i.e. static method.
 #' @usage
-#' reactomeInteractor(acc, resource = 'Reactome', type = 'psicquic',
+#' rtInteractor(acc, resource = 'Reactome', type = 'psicquic',
 #'                    detail = TRUE, silent = FALSE)
-#' reactomeInteractor(acc, type = 'static', detail = TRUE, page = -1,
+#' rtInteractor(acc, type = 'static', detail = TRUE, page = -1,
 #'                    pageSize = -1, silent = FALSE)
-#' reactomeInteractor(acc, type = 'static', detail = FALSE, silent = FALSE)
+#' rtInteractor(acc, type = 'static', detail = FALSE, silent = FALSE)
 #' @param acc string. Interactor accession(s) (or identifier(s)).
 #' @param resource string. PSICQUIC Resource.
 #' @param type string. \code{psicquic}: PSICQUIC method;
@@ -27,24 +27,24 @@
 #' }
 #'
 #' @examples
-#' interactors = reactomeInteractor(acc = 'Q13501', resource = 'MINT', type = 'psicquic')
-#' interactors = reactomeInteractor(acc = 'Q13501', resource = 'MINT', type = 'static')
-#'
-#' interactors = reactomeInteractor(acc = c('Q13501','Q16543'),
-#'                                  resource = 'MINT', type = 'psiquic')
-#' interactors = reactomeInteractor(acc = c('Q13501','Q16543'),
-#'                                  resource = 'MINT', type = 'static')
+#' # List PSICQUIC proviers:
+#' (provs = PSICQUIC_Provier())
+#' \dontrun{
+#' ins.p = rtInteractor(acc = c('Q13501','Q16543'), type = 'psiquic',
+#'                 resource = 'MINT')}
+#' ins.s = rtInteractor(acc = c('Q13501','Q16543'), type = 'static',
+#'                 resource = 'MINT')
 #' @rdname interactor
 #' @export
 #' @include POST_Method.R
 
-reactomeInteractor <- function(acc,
-                               resource = 'Reactome',
-                               type = 'static',
-                               detail = TRUE,
-                               page = -1,
-                               pageSize = -1,
-                               silent = FALSE){
+rtInteractor <- function(acc,
+                         type = 'static',
+                         resource = 'Reactome',
+                         detail = TRUE,
+                         page = -1,
+                         pageSize = -1,
+                         silent = FALSE){
   # check type
   type = str_to_lower(type)
   if(length(type) > 1 || !any(type %in% c('static', 'psicquic')))
