@@ -18,7 +18,6 @@
 #'
 #'
 #' @examples
-# 代码太长及时换行
 #' rtOrthology = reactomeOthology(speciesId = '49633',id = 'R-HSA-6799198')
 #' rtOrthologies = reactomeOthology(speciesId = '49633',
 #'                                  id = c('R-HSA-6799198','R-HSA-6799197'))
@@ -34,6 +33,8 @@ reactomeOthology <- function(speciesId = '49633',
                              silent = FALSE){
   if(is.null(speciesId)&is.null(id))
     stop('speciesId and id cannot be null')
+  if(1 == length(id))
+    id = str_split(id, '[,;\\s]')[[1]]
   url = "http://www.reactome.org/ContentService/data/orthologies/ids/species/"
   url = str_c(url, speciesId)
   dt = POST(url = url,

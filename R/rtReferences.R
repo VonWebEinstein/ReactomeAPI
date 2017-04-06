@@ -7,14 +7,9 @@
 #' @return A dataframe.
 #'
 #' @examples refrenceEntity = reactomeReferences("15377").
-#'
-#' @include error.R
-#' @import jsonlite
-#' @import stringr
-#' @import httr
 #' @export
 #'
-#' @rdname reference
+#' @rdname entity
 #'
 # 帮助指定到entity
 reactomeReferences <- function(id){
@@ -30,7 +25,7 @@ reactomeReferences <- function(id){
     return(res)
 }
 
-#' @rdname reference
+#' @rdname entity
 #' @export
 
 rtReferences <- function(id){
