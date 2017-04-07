@@ -2,7 +2,7 @@
 #'
 #' This method recursively retrieves all the events contained in any given event.
 #' @param id string. The event for which the contained events are requested.
-#' @param attributeNames string. if NULL, the default, all properties of the contained evnets
+#' @param attributeNames string or character vector. if NULL, the default, all properties of the contained evnets
 #' will be returned;otherwise, just retrieve those attributes in \code{attributeNames} list.
 #' @param silent logical; if TRUE, the default, error message is not printed.
 #' @details

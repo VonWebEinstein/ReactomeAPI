@@ -9,7 +9,7 @@ rtContainedEvents(id, attributeNames = NULL, silent = TRUE)
 \arguments{
 \item{id}{string. The event for which the contained events are requested.}
 
-\item{attributeNames}{string. if NULL, the default, all properties of the contained evnets
+\item{attributeNames}{string or character vector. if NULL, the default, all properties of the contained evnets
 will be returned;otherwise, just retrieve those attributes in \code{attributeNames} list.}
 
 \item{silent}{logical; if TRUE, the default, error message is not printed.}
