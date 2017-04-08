@@ -27,18 +27,18 @@
 #' @examples
 #‘ # search by DbId or OrCiId and retrieve some specfic properties
 #' id.query = rtperson(id = c("0000-0001-5807-0069","5251225"),
-#'                    attributeNames = c("displayName", "firstname"), silent = TRUE)
+#'                    attributeNames = c("displayName", "firstname"), silent = FALSE)
 #' # id.query = rtperson(id = c("0000-0001-5807-0069","5251225"),
 #' #                  attributeNames = NULL, silent = TRUE)
 #' # search by name
-#' name.query = rtperson(name = c("Steve Jupe", "Tam Angela"), exactlyMatch = TRUE, silent = TRUE)
+#' name.query = rtperson(name = c("Steve Jupe", "Tam Angela"), exactlyMatch = TRUE, silent = FALSE)
 #'
 #' # get a list of pathways or publications authored by given people
-#' dt.1 = authoredPublication(id = "0000-0001-5807-0069",silent = T)
-#' dt.2 = authoredPathway(id = "0000-0001-5807-0069",silent = T)
+#' dt.1 = authoredPublication(id = "0000-0001-5807-0069",silent = FALSE)
+#' dt.2 = authoredPathway(id = "0000-0001-5807-0069",silent = FALSE)
 
 
-rtperson = function(id = NULL, name = NULL, exactlyMatch = TRUE, attributeNames = NULL, silent = TRUE){
+rtperson = function(id = NULL, name = NULL, exactlyMatch = TRUE, attributeNames = NULL, silent = FALSE){
 
   if(!is.null(id) && !is.null(name))
     stop("one of id and name must be null")
@@ -148,7 +148,7 @@ single_attr_person = function(id, singleAttribute, silent){
 # }
 
 #' @rdname person
-authoredPathway = function(id, silent){
+authoredPathway = function(id, silent = FALSE){
 
   dt.ls = lapply(id, function(x) url2dataframe(list(getURL(), "person", x, "authoredPathways"),
                                    silent))
@@ -157,7 +157,7 @@ authoredPathway = function(id, silent){
 
 
 #' @rdname person
-authoredPublication = function(id, silent){
+authoredPublication = function(id, silent = FALSE){
 
   dt.ls = lapply(id, function(x) url2dataframe(list(getURL(), "person", x, "publications"),
                                                silent))
