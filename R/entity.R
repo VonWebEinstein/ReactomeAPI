@@ -1,60 +1,39 @@
 #' PhysicalEntity Queries
 #'
-#' Retrieves the subunits, structures or other forms of a given entity
+#'  \code{rtEntity()} retrieves the subunits, structures or other forms of a given entity
 #'
-#'
-
-#' @param id a character vector of identifiers of the complex, entity or the PhysicalEntity
-#' that you want to query
-#' @param queryType a character vector that specify the query type. can be \code{subunits},
+#' @param id string or a character vector of identifiers of the complex,
+#' entity or the PhysicalEntity that you want to query
+#' @param queryType string. Specify the query type. can be \code{subunits},
 #' \code{componentOf}, or \code{otherForms}.
-#' @param simplify attempt to reduce the result to a data frame when length of \code{id} is 1.
+#' @param silent logical;if true, run quietly. Default = false.
 #' @details
-#'
-#' queryType = \code{subunits}. Retrieves the list of subunits that constitute any given complex.
+#' \code{queryType} =
+#' \itemize{
+#'   \item \code{subunits}: retrieves the list of subunits that constitute any given complex.
 #' In case the complex comprises other complexes, this method recursively breaks all of them into
 #' their subunits.
-#'
-#' When queryType = \code{componentOf}, this function will retrieves the list of structures
+#'   \item \code{componentOf}: this method will retrieves the list of structures
 #' (Complexes and Sets) that include the given entity as their component.It should be mentioned
 #' that the list includes only simplified entries (type, names, ids) and not full information about each item.
-#'
-#' queryType = \code{otherForms}. Retrieves a list containing all other forms of the given PhysicalEntity.
+#'   \item \code{otherForms}. retrieves a list containing all other forms of the given PhysicalEntity.
 #' These other forms are PhysicalEntities that share the same ReferenceEntity identifier,
 #' e.g. PTEN H93R[R-HSA-2318524] and PTEN C124R[R-HSA-2317439] are two forms of PTEN.
-#' @return a list of tha same length of \code{id}, with ecah element corresponding to the query result of
-#' one of id.
-#' @include error.R
+#' }
+#' @return a data frame.
+#' @include url2dataframe.R
+#' @include list2dataframe.R
 #' @export
 #' @examples
-#' rtEntity("R-HSA-5674003", "subunits")
-#' rtEntity("R-HSA-199420", "componentOf")
-#' rtEntity(id = c("R-HSA-5674003", "R-HSA-199420"),
-#'          queryType= c("subunits", "componentOf"))
-# 对多个id指定多个类型不自然，多个id单一类型
-#'
-#' @import httr
-#' @import jsonlite
-#' @import stringr
+#' ## subunits query of R-HSA-5674003
+#' entity.1 = rtEntity("R-HSA-5674003", "subunits")
+#' ## structures that include R-HSA-199420 as their component
+#' entity.2 = rtEntity("R-HSA-199420", "componentOf")
+#' ## tha same type query for multiple ids
+#' entity.3 = rtEntity(id = c("R-HSA-5674003", "R-HSA-199426"), queryType = "subunits")
 #' @rdname entity
 
-# 在外面用apply包装是下下策
-rtEntity = function(id, queryType, simplify = TRUE){
-
-  res = mapply(reactomeEntity, id = id, queryType = queryType,
-               SIMPLIFY = FALSE)
-  if(length(res) == 1 && simplify){
-
-    res = res[[1]]
-  }
-  return(res)
-}
-
-
-
-reactomeEntity = function(id,                 # entity id, complex id , dbid or StId of a PhysicalEntity
-                          queryType,          # query type about Entity
-                          silent = FALSE){    # whether print error messages on the screen
+rtEntity = function(id, queryType, silent = FALSE){
 
 
   if(is.null(id) || is.null(queryType)){
@@ -66,17 +45,15 @@ reactomeEntity = function(id,                 # entity id, complex id , dbid or 
                subunits = 'complex',
                componentOf = 'entity',
                otherForms = 'entity')
-  url = str_c(url, tmp, '/', id, '/', queryType)
+  dt.ls = lapply(id,
+                 function(x) url2dataframe(list(url, tmp, x, queryType),
+                 silent = silent, rework = function(s) {cbind(inputId = x, s)}))
+  return(list2dataframe(dt.ls, NULL, NULL, NULL))
 
-  res = try(fromJSON(url), silent = TRUE)
-  if(inherits(res, "try-error")){
-    tmp = content(GET(url, content_type_json()))
-    return(errorMessage(tmp, silent = silent))
-  }
-  else{
-    return(res)
-  }
+
 }
+
+
 
   # if(queryType == 'subunits')
   #   tmp = 'complex'

@@ -46,8 +46,13 @@ reactomeSchema <- function(schemaclass = "Pathway",
   if((intervalOFpathway[1] == 1)&(intervalOFpathway[2] == -1)){
     number = dataframeResPage(type = 'count')
     cat(str_c('The total number of pathway is : ', as.character(number)))
-    return(schema(interval = c(1, number)))
-
+    res = schema(interval = c(1, number))
+    }
+  else{
+    res = schema(interval = intervalOFpathway)
+  }
+  return(res)
+}
   #   tmp = str_c("The count of ",
   #               schemaclass,
   #               " that you ask is ",
@@ -60,10 +65,7 @@ reactomeSchema <- function(schemaclass = "Pathway",
   #     res = schema(interval = c(1,number))
   #     return(res)
   #   }
-  }
 
-  return(schema(interval = intervalOFpathway))
-}
 
 # return the interval dataframe that user ask
 schema <- function(interval){
@@ -122,7 +124,6 @@ dataframeResPage <- function(schemaclass = 'Pathway',
 
     # cat the updating rely on the page
     cat(printRateOfProcess(page, total_pages))
-
     return(res)
   }
 }

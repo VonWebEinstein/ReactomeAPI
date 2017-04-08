@@ -13,7 +13,7 @@
 #'  Event is consideried. default = TRUE
 #' @param withDiagram logical;if TRUE, only those pathways with a diagram will be listed.
 #' default = FALSE.
-#' @param silent logical; if TRUE, error message will not be printed. default = TRUE
+#' @param silent logical; if TRUE, error message will not be printed. default = fasle
 #' @return a data frame
 #' @export
 #' @include error.R
@@ -33,7 +33,7 @@
 #'                   allForms = TRUE, withDiagram = TRUE)
 
 rtLowerPathway = function(id, species = "48887",
-                       allForms = TRUE, withDiagram = TRUE, silent = TRUE){
+                       allForms = TRUE, withDiagram = TRUE, silent = FALSE){
 
  url0 = "http://www.reactome.org/ContentService/data/pathways/low"
  tmp0 = switch (withDiagram, "diagram", NULL)
@@ -70,7 +70,7 @@ rtLowerPathway = function(id, species = "48887",
 #' human.2 = rtTopPathway(species = "Homo sapiens")
 
 
-rtTopPathway = function(species){
+rtTopPathway = function(species, silent = FALSE){
 
   url0 = "http://www.reactome.org/ContentService/data/pathways/top"
   if( !str_detect(species, "\\d{4}") ){
@@ -79,7 +79,7 @@ rtTopPathway = function(species){
   }
   urlComponent = list(url0, species)
 
-  dt = url2dataframe(urlComponent = urlComponent)
+  dt = url2dataframe(urlComponent = urlComponent, silent = FALSE)
 
   return(dt)
 }
