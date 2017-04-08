@@ -12,6 +12,7 @@ reactomeDatabase <- function(){
   tmp = lapply(c('name', 'version'),
               function(str) content(GET(paste(url, str, sep = ''))))
   dt = data.frame(name = tmp[[1]], version = tmp[[2]], stringsAsFactors = F)
+  cat(str_c(dt$name, '\n', dt$version))
 }
 
 #' @export
