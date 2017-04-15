@@ -3,7 +3,6 @@
 #' Retrieves the orthologie for any given set of events or entities in the specified species,
 #' multiple or single. Multiple response multi-ids, single response single id.
 #'
-# long ? interger, 改成可接受string 和 interger
 #' @param speciesId integer. The species for which the orthology is requested.
 #' @param id strings. The event for which the orthology is requested.
 #' @param silent logical. Run quitely.
@@ -26,13 +25,13 @@
 #' @export
 #' @include POST_Method.R
 
-# 健壮和用户友好， 多个ID时可指定character vector， 逗号分割单string, 甚至list
 reactomeOthology <- function(speciesId = '49633',
                              id = 'R-HSA-6799198',
                              multi = FALSE,
                              silent = FALSE){
   if(is.null(speciesId)&is.null(id))
     stop('speciesId and id cannot be null')
+  speciesId = as.character(speciesId)
   if(1 == length(id))
     id = str_split(id, '[,;\\s]')[[1]]
   url = "http://www.reactome.org/ContentService/data/orthologies/ids/species/"
@@ -55,6 +54,11 @@ reactomeOthology <- function(speciesId = '49633',
   return(dt)
 }
 
+#' @rdname othology
+#' @export
 
+rtOthology <- function(speciesId,id, multi, silent = FALSE){
+  return(reactomeOthology(speciesId = speciesId, id = id, multi = multi, silent = silent))
+}
 
 
