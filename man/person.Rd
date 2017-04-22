@@ -31,9 +31,9 @@ If NULL, the default, no filtration wil be done.}
 a data frame.
 }
 \description{
-\code{rtperson()} retrieves a specific person's information in Ractome by his/her OrcidId or DbId.
-\code{authoredPathways()} or \code{authoredPublication()} can be used to get a list of
- pathways or publications authored by a given person.
+\code{rtperson()} retrieves a specific person's information in Ractome by
+his/her OrcidId or DbId. \code{authoredPathways()} or \code{authoredPublication()}
+can be used to get a list of pathways or publications authored by a given person.
 }
 \details{
 When exactlyMatch = false, \code{name} should be a string or character vector of length 1.
@@ -41,9 +41,10 @@ Only one of \code{id} and \code{name} needs to be specified, the other remains n
 }
 \examples{
 id.query = rtperson(id = c("0000-0001-5807-0069","5251225"),
-                   attributeNames = c("displayName", "firstname"), silent = FALSE)
-# id.query = rtperson(id = c("0000-0001-5807-0069","5251225"),
-#                  attributeNames = NULL, silent = TRUE)
+attributeNames = c("displayName", "firstname"), silent = FALSE)
+# query for all properties of "0000-0001-5807-0069" and "5251225"
+(id.query = rtperson(id = c("0000-0001-5807-0069","5251225"),
+attributeNames = NULL, silent = TRUE) )
 # search by name
 name.query = rtperson(name = c("Steve Jupe", "Tam Angela"), exactlyMatch = TRUE, silent = FALSE)
 

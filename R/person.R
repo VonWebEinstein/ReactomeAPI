@@ -1,8 +1,8 @@
 #' Person queries
 #'
-#' \code{rtperson()} retrieves a specific person's information in Ractome by his/her OrcidId or DbId.
-#' \code{authoredPathways()} or \code{authoredPublication()} can be used to get a list of
-#'  pathways or publications authored by a given person.
+#' \code{rtperson()} retrieves a specific person's information in Ractome by
+#' his/her OrcidId or DbId. \code{authoredPathways()} or \code{authoredPublication()}
+#' can be used to get a list of pathways or publications authored by a given person.
 #' @usage rtperson(id, attributeNames, ...)
 #' rtperson(name, exactlyMatch, ...)
 #'
@@ -22,14 +22,14 @@
 #' @return a data frame.
 #' @rdname person
 #' @export
-#' @include url2dataframe.R
-#' @include list2dataframe.R
+#' @include includes.R
 #' @examples
 #‘ # search by DbId or OrCiId and retrieve some specfic properties
 #' id.query = rtperson(id = c("0000-0001-5807-0069","5251225"),
-#'                    attributeNames = c("displayName", "firstname"), silent = FALSE)
-#' # id.query = rtperson(id = c("0000-0001-5807-0069","5251225"),
-#' #                  attributeNames = NULL, silent = TRUE)
+#' attributeNames = c("displayName", "firstname"), silent = FALSE)
+#' # query for all properties of "0000-0001-5807-0069" and "5251225"
+#' (id.query = rtperson(id = c("0000-0001-5807-0069","5251225"),
+#' attributeNames = NULL, silent = TRUE) )
 #' # search by name
 #' name.query = rtperson(name = c("Steve Jupe", "Tam Angela"), exactlyMatch = TRUE, silent = FALSE)
 #'
@@ -124,29 +124,8 @@ single_attr_person = function(id, singleAttribute, silent){
 
 }
 
-
-
-# rbind data frames with different columns
-# bindToSingledataframe = function(dt.list){
-#
-#    all.colname = Reduce(union, lapply(dt.list, names))
-#    extended.dt.list = lapply(dt.list, function(x) extendDataframe(x, variableName = all.colname))
-#
-#    res = do.call(rbind, extended.dt.list)
-#
-#    return(res)
-# }
-#
-# extendDataframe = function(dt, variableName){
-#
-#   addVar = variableName[!(variableName %in% names(dt))]
-#   new.dt = data.frame(t(rep(NA, length(addVar))))
-#   names(new.dt) = addVar
-#   new.dt = cbind(dt, new.dt)
-#
-#   return(new.dt)
-# }
-
+#' @include includes.R
+#' @export
 #' @rdname person
 authoredPathway = function(id, silent = FALSE){
 
@@ -156,6 +135,8 @@ authoredPathway = function(id, silent = FALSE){
 }
 
 
+#' @include includes.R
+#' @export
 #' @rdname person
 authoredPublication = function(id, silent = FALSE){
 

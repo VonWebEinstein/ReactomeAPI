@@ -4,15 +4,16 @@
 \alias{rtContainedEvents}
 \title{Pathway related queries}
 \usage{
-rtContainedEvents(id, attributeNames = NULL, silent = TRUE)
+rtContainedEvents(id, attributeNames = NULL, silent = FALSE)
 }
 \arguments{
 \item{id}{string. The event for which the contained events are requested.}
 
-\item{attributeNames}{string or character vector. if NULL, the default, all properties of the contained evnets
-will be returned;otherwise, just retrieve those attributes in \code{attributeNames} list.}
+\item{attributeNames}{string or character vector. if NULL, the default, all
+properties of the contained evnets will be returned;otherwise, just retrieve
+those attributes in \code{attributeNames} list.}
 
-\item{silent}{logical; if TRUE, the default, error message is not printed.}
+\item{silent}{logical; if TRUE, error message is not printed. default = false}
 }
 \value{
 a data frame.
@@ -21,14 +22,16 @@ a data frame.
 This method recursively retrieves all the events contained in any given event.
 }
 \details{
-Events are the building blocks used in Reactome to represent all biological processes,
-and they include pathways and reactions. Typically, an event can contain other events.
-For example, a pathway can contain smaller pathways and reactions.
+Events are the building blocks used in Reactome to represent all biological
+processes, and they include pathways and reactions. Typically, an event can
+contain other events. For example, a pathway can contain smaller pathways and
+reactions.
 }
 \examples{
 # retrieve some attributes of the contained events
 multi.Attr.event = rtContainedEvents(id = "R-HSA-5673001",
-attributeNames = c("stId", "name"), silent = TRUE)
+                   attributeNames = c("stId", "name"), silent = FALSE)
 # get all the properties
-all.Attr.event = rtContainedEvents(id = "R-HSA-5673001", attributeNames = NULL, silent = TRUE)
+all.Attr.event = rtContainedEvents(id = "R-HSA-5673001",
+                 attributeNames = NULL, silent = FALSE)
 }

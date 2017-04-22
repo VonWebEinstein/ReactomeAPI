@@ -1,6 +1,6 @@
 #' PhysicalEntity Queries
 #'
-#'  \code{rtEntity()} retrieves the subunits, structures or other forms of a given entity
+#' \code{rtEntity()} retrieves the subunits, structures or other forms of a given entity
 #'
 #' @param id string or a character vector of identifiers of the complex,
 #' entity or the PhysicalEntity that you want to query
@@ -21,8 +21,7 @@
 #' e.g. PTEN H93R[R-HSA-2318524] and PTEN C124R[R-HSA-2317439] are two forms of PTEN.
 #' }
 #' @return a data frame.
-#' @include url2dataframe.R
-#' @include list2dataframe.R
+#' @include includes.R
 #' @export
 #' @examples
 #' ## subunits query of R-HSA-5674003
@@ -30,7 +29,8 @@
 #' ## structures that include R-HSA-199420 as their component
 #' entity.2 = rtEntity("R-HSA-199420", "componentOf")
 #' ## tha same type query for multiple ids
-#' entity.3 = rtEntity(id = c("R-HSA-5674003", "R-HSA-199426"), queryType = "subunits")
+#' entity.3 = rtEntity(id = c("R-HSA-5674003", "R-HSA-199426"),
+#' queryType = "subunits")
 #' @rdname entity
 
 rtEntity = function(id, queryType, silent = FALSE){
@@ -54,48 +54,5 @@ rtEntity = function(id, queryType, silent = FALSE){
 }
 
 
-
-  # if(queryType == 'subunits')
-  #   tmp = 'complex'
-  # else
-  #   tmp = 'entity'
-
-  # if(queryType == "subunit")
-  # {
-  #   url = paste("http://www.reactome.org/ContentService/data/complex/", id, "/subunits",
-  #               sep = "")
-  #
-  # }
-  # if(queryType == "structure"){
-  #
-  #   url = paste("http://www.reactome.org/ContentService/data/entity/", id, "/componentOf",
-  #               sep = "")
-  # }
-  # if(queryType == "form"){
-  #
-  #   url = paste("http://www.reactome.org/ContentService/data/entity/", id, "/otherForms",
-  #               sep = "")
-  # }
-  # response = GET(url)
-  # if(status_code(response) == 404){
-  #
-  #   print("Identifier does not match with any in current data\n")
-  #   return(404)
-  # }
-  # if(status_code(response) == 406){
-  #
-  #   print("Not acceptable according to the accept headers sent in the request\n")
-  #   return(406)
-  # }
-  # if(status_code(response) == 500){
-  #
-  #   print("Internal Server Error\n")
-  #   return(500)
-  # }
-  # if(status_code(response) == 200){
-  #
-  #   dtframe = fromJSON(url)
-  #   return(dtframe)
-  # }
 
 

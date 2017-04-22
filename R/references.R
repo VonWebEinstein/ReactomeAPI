@@ -1,17 +1,11 @@
-#' ReferenceEntity queries
-#'
-#' Retrieves a dataframe containing all the reference entities for a given identifier.
-#'
-#' @param id string. Identifier for a given entity
-#'
-#' @return A dataframe.
-#'
+#' \code{rtReference()} retrieves a dataframe containing
+#' all the reference entities for a given identifier.
 #' @examples refrenceEntity = reactomeReferences("15377").
 #' @export
 #'
 #' @rdname entity
 #'
-# 帮助指定到entity
+
 reactomeReferences <- function(id){
   if(is.null(id))
     stop("id can't be null")

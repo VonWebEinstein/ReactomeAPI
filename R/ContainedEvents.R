@@ -2,26 +2,28 @@
 #'
 #' This method recursively retrieves all the events contained in any given event.
 #' @param id string. The event for which the contained events are requested.
-#' @param attributeNames string or character vector. if NULL, the default, all properties of the contained evnets
-#' will be returned;otherwise, just retrieve those attributes in \code{attributeNames} list.
-#' @param silent logical; if TRUE, the default, error message is not printed.
+#' @param attributeNames string or character vector. if NULL, the default, all
+#' properties of the contained evnets will be returned;otherwise, just retrieve
+#' those attributes in \code{attributeNames} list.
+#' @param silent logical; if TRUE, error message is not printed. default = false
 #' @details
-#' Events are the building blocks used in Reactome to represent all biological processes,
-#' and they include pathways and reactions. Typically, an event can contain other events.
-#' For example, a pathway can contain smaller pathways and reactions.
+#' Events are the building blocks used in Reactome to represent all biological
+#' processes, and they include pathways and reactions. Typically, an event can
+#' contain other events. For example, a pathway can contain smaller pathways and
+#' reactions.
 #' @return  a data frame.
 #' @export
-#' @include error.R
-#' @include url2dataframe.R
+#' @include includes.R
 #' @rdname ContainedEvents
 #' @examples
 #' # retrieve some attributes of the contained events
 #' multi.Attr.event = rtContainedEvents(id = "R-HSA-5673001",
-#' attributeNames = c("stId", "name"), silent = TRUE)
+#'                    attributeNames = c("stId", "name"), silent = FALSE)
 #' # get all the properties
-#' all.Attr.event = rtContainedEvents(id = "R-HSA-5673001", attributeNames = NULL, silent = TRUE)
+#' all.Attr.event = rtContainedEvents(id = "R-HSA-5673001",
+#'                  attributeNames = NULL, silent = FALSE)
 
-rtContainedEvents = function(id, attributeNames = NULL, silent = TRUE){
+rtContainedEvents = function(id, attributeNames = NULL, silent = FALSE){
 
 
   if(!is.null(attributeNames)){
@@ -29,7 +31,7 @@ rtContainedEvents = function(id, attributeNames = NULL, silent = TRUE){
     return(multi_attr_event(id, attributeNames, silent))
   }
 
-  dt = url2dataframe(list(GETURL(), id, "containedEvents"), silent)
+  dt = url2dataframe(list(GETURL(), id, "containedEvents"), silent = silent)
   return(dt)
 
 
@@ -48,18 +50,18 @@ single_attr_event = function(id, singleAttribute, silent){
   cont = content(GET_obj)
 
   if(!GET_obj$status_code == 200){
-    errorMessage(cont, silent)
+    errorMessage(cont, silent = silent)
     return(NA)
   }
 
   if(singleAttribute == "name"){
 
     vec.tmp = str_replace_all(str_split(cont, "\\n,")[[1]],
-                        "[(\\])(\\[)(\\n)]", "")
+                        "[\\]\\[\\n]", "")
   }
   else{
 
-  vec.tmp = str_replace_all(str_split(cont, ",")[[1]], "[(\\])(\\[)]", "")
+  vec.tmp = str_replace_all(str_split(cont, ",")[[1]], "[\\]\\[]", "")
   }
   vec = str_trim(vec.tmp)
 
