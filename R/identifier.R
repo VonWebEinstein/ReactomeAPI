@@ -2,9 +2,13 @@
 #'
 #' Analyse the post identifiers over the different species or projects the result
 #' to Homo Sapiens
+#' @usage
+#' rtAnalyseIdentifier(id, ...)
 #'
+#' rtAnalyseIdentifier(file, ...)
 #' @param id character vector. one or multiple identifiers to analyse followed by
 #' their expresssion(when applied)
+#' @param file path to file that contains data to be analysed.
 #' @param MakeProjection logical, whether projects the result to Homo Sapiens or not.
 #' @param IncludeInteractors logical. whether include interactors.
 #' @param pageSize integer. pathways per page.
@@ -29,19 +33,24 @@
 #'
 #' \code{resource} can be \code{TOTAL,UNIPROT,ENSEMBL,CHEBI,MIRBASE,NCBI_PROTEIN,
 #' EMBL,COMPOUND}.
-#' @return a data frame including pathway information; if no pathway found,
-#' a summary data frame will be returned.
+#' @return a list with a data frame including pathway information and the token
+#' object; if no pathway found, only a summary data frame will be returned.
+#'
+#' The summary.token can be used to retrieve the results of a previously
+#' performed analysis without the need to submit the sample again.
 #' @export
 #' @rdname identifier
 #' @include includes.R
+#' @import httr
 #' @examples
 #' # analyse multiple ids at the same time
-#' pathwayInf.1 = rtAnalyseIdentifier(id = c('Q13501', 'P41743', 'Q9H492', '10652'))
+#' pathwayInf.1 = rtAnalyseIdentifier(id = c('PTEN', 'PIK3C2A', 'UNC58'))
 #' # projects the result to Homo Sapiens
-#' pathwayInf.2 = rtAnalyseIdentifier(id = c('Q13501', 'P41743', 'Q9H492', '10652'),
+#' pathwayInf.2 = rtAnalyseIdentifier(id = c('PTEN', 'PIK3C2A', 'UNC58'),
 #' MakeProjection = TRUE)
 
-rtAnalyseIdentifier = function(id,
+rtAnalyseIdentifier = function(id = NULL,
+                             file = NULL,
                              MakeProjection= FALSE,
                              IncludeInteractors = FALSE,
                              pageSize = -1,
@@ -65,15 +74,22 @@ rtAnalyseIdentifier = function(id,
 
     if(x$pathwaysFound){
 
-      return(x$pathways)
+      return(list(pathway = x$pathways,
+                  token = x$summary$token))
     }else{
 
     return(x$summary)
     }
   }
+  if(!is.null(id)){
 
-  dt = POST_Method(url =url,
-                   body = str_c(id, collapse = ","),
+    body = str_c(id, collapse = ",")
+  }else{
+
+    body = upload_file(file)
+  }
+  dt = POST_Method(url = url,
+                   body = body,
                    rework_func = rework_func,
                    checkempty_func = checkempty_func,
                    silent = silent)
@@ -85,6 +101,4 @@ getURL = function(){
 
   "http://www.reactome.org/AnalysisService/identifiers/"
 }
-
-
 

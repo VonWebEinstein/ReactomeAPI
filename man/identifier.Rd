@@ -4,13 +4,15 @@
 \alias{rtAnalyseIdentifier}
 \title{Queries for one or multiple  identifiers}
 \usage{
-rtAnalyseIdentifier(id, MakeProjection = FALSE, IncludeInteractors = FALSE,
-  pageSize = -1, page = -1, sortBy = "ENTITIES_PVALUE", order = "ASC",
-  resource = "TOTAL", silent = FALSE)
+rtAnalyseIdentifier(id, ...)
+
+rtAnalyseIdentifier(file, ...)
 }
 \arguments{
 \item{id}{character vector. one or multiple identifiers to analyse followed by
 their expresssion(when applied)}
+
+\item{file}{path to file that contains data to be analysed.}
 
 \item{MakeProjection}{logical, whether projects the result to Homo Sapiens or not.}
 
@@ -29,8 +31,11 @@ their expresssion(when applied)}
 \item{silent}{logical, to run quietly.}
 }
 \value{
-a data frame including pathway information; if no pathway found,
-a summary data frame will be returned.
+a list with a data frame including pathway information and the token
+object; if no pathway found, only a summary data frame will be returned.
+
+The summary.token can be used to retrieve the results of a previously
+performed analysis without the need to submit the sample again.
 }
 \description{
 Analyse the post identifiers over the different species or projects the result
@@ -54,8 +59,8 @@ EMBL,COMPOUND}.
 }
 \examples{
 # analyse multiple ids at the same time
-pathwayInf.1 = rtAnalyseIdentifier(id = c('Q13501', 'P41743', 'Q9H492', '10652'))
+pathwayInf.1 = rtAnalyseIdentifier(id = c('PTEN', 'PIK3C2A', 'UNC58'))
 # projects the result to Homo Sapiens
-pathwayInf.2 = rtAnalyseIdentifier(id = c('Q13501', 'P41743', 'Q9H492', '10652'),
+pathwayInf.2 = rtAnalyseIdentifier(id = c('PTEN', 'PIK3C2A', 'UNC58'),
 MakeProjection = TRUE)
 }
